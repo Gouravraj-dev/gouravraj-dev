@@ -1,0 +1,2856 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gourav Panwar - Web Developer & Designer</title>
+  <meta name="description"
+    content="Gourav Panwar - Web Developer & Designer creating modern, responsive websites with clean code and creative design.">
+  <meta name="keywords" content="web developer, designer, freelance, portfolio, HTML, CSS, JavaScript, React">
+  <meta name="author" content="Gourav Panwar">
+
+  <!-- Performance optimization: Preload critical resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" as="style">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- External Libraries -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://i.postimg.cc/fRMJQPTW/fevicon-2.png" />
+
+  <style>
+    :root {
+      --neon-cyan: #00f3ff;
+      --neon-pink: #ff00c8;
+      --neon-purple: #a855f7;
+      --neon-green: #00ff88;
+      --dark-bg: #0f0c29;
+      --card-w: 220px;
+      --card-h: 300px;
+      --perspective: 1000px;
+      --radius: 420px;
+      --transition: 0.3s;
+      --header-height: 70px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: radial-gradient(circle at top left, var(--dark-bg), #302b63, #24243e);
+      scroll-behavior: smooth;
+      cursor: none;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right, var(--neon-cyan), var(--neon-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, var(--neon-cyan), var(--neon-purple));
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(to bottom, var(--neon-pink), var(--neon-purple));
+    }
+
+    /* Cylinder container styles */
+    .stage {
+      width: min(1100px, 95vw);
+      height: 520px;
+      perspective: var(--perspective);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    /* Cylinder container which we rotate around Y */
+    .cylinder {
+      width: var(--card-w);
+      height: var(--card-h);
+      transform-style: preserve-3d;
+      transition: transform var(--transition) ease-out;
+      will-change: transform;
+      position: relative;
+      touch-action: pan-x;
+    }
+
+    /* Panels (cards) */
+    .panel {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--card-w);
+      height: var(--card-h);
+      transform-style: preserve-3d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      box-sizing: border-box;
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(31, 41, 55, 0.6), rgba(17, 24, 39, 0.6));
+      box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6), inset 0 -6px 20px rgba(255, 255, 255, 0.02);
+      color: #e6eef8;
+      transform-origin: center center;
+      opacity: 0.98;
+      transition: opacity .25s ease, filter .2s ease;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      z-index: -1;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+      background-size: 400%;
+      border-radius: 1.5rem;
+      animation: glowing 20s linear infinite;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .panel:hover::before {
+      opacity: 1;
+    }
+
+    .panel img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: block;
+      transition: all 0.4s ease;
+    }
+
+    .panel:hover img {
+      transform: scale(1.05) rotate(2deg);
+      filter: brightness(1.2) saturate(1.2);
+    }
+
+    .panel h3,
+    .panel h4 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: 0.2px;
+      transition: all 0.3s ease;
+    }
+
+    .panel:hover h3 {
+      transform: translateY(-3px);
+      text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+    }
+
+    .panel p {
+      margin: 6px 0 0;
+      font-size: .86rem;
+      color: #a8bbd2;
+      transition: all 0.3s ease;
+    }
+
+    .panel:hover p {
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* subtle highlight for front-facing panel */
+    .panel.front {
+      box-shadow: 0 22px 60px rgba(2, 6, 23, 0.7), 0 2px 8px rgba(0, 0, 0, 0.35);
+      transform: translateZ(6px) scale(1.05);
+      opacity: 1;
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    .panel.front::before {
+      opacity: 1;
+    }
+
+    .hint {
+      position: absolute;
+      left: 18px;
+      top: 18px;
+      font-size: 13px;
+      color: #9fb7d8;
+      opacity: .9;
+    }
+
+    /* Mobile responsive tweaks */
+    @media (max-width: 768px) {
+      :root {
+        --card-w: 125px;
+        --card-h: 210px;
+        --radius: 180px;
+        --perspective: 500px;
+      }
+
+      .stage {
+        height: 350px;
+        width: 95vw;
+        perspective: 500px;
+      }
+
+      .panel {
+        padding: 10px;
+      }
+
+      .panel img {
+        height: 100px;
+        margin-bottom: 8px;
+      }
+
+      .panel h3 {
+        font-size: 0.75rem;
+      }
+
+      .panel p {
+        font-size: 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --card-w: 110px;
+        --card-h: 170px;
+        --radius: 180px;
+      }
+
+      .stage {
+        height: 320px;
+      }
+    }
+
+    /* Progress indicator */
+    .progress {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+
+    .progress-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    .progress-dot.active {
+      background-color: var(--neon-cyan);
+    }
+
+    /* Popup styles */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .popup-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .popup-content {
+      background: linear-gradient(135deg, rgba(17, 24, 39, 0.9), rgba(31, 41, 55, 0.9));
+      padding: 2.5rem;
+      border-radius: 1.5rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      transform: scale(0.8) translateY(50px);
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 1001;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 0 50px rgba(168, 85, 247, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+      overflow: hidden;
+    }
+
+    .popup-content::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      z-index: -1;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-black), var(--neon-purple), var(--neon-cyan));
+      background-size: 400%;
+      border-radius: 1.5rem;
+      animation: glowing 20s linear infinite;
+    }
+
+    .popup-overlay.active .popup-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--neon-purple);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.7);
+      transition: all 0.3s ease;
+      z-index: 1002;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .close-btn:hover {
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 0 20px rgba(168, 85, 247, 0.9);
+      background: var(--neon-pink);
+    }
+
+    /* Card clone for animation */
+    .card-clone {
+      position: fixed;
+      z-index: 999;
+      pointer-events: none;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+    }
+
+    #particles-js {
+      position: fixed;
+      z-index: -1;
+      inset: 0;
+    }
+
+    footer {
+      border-top: 2px solid transparent;
+      border-image: linear-gradient(to right, var(--neon-purple), var(--neon-pink));
+      border-image-slice: 1;
+    }
+
+    .cursor {
+      position: fixed;
+      width: 15px;
+      height: 15px;
+      background: var(--neon-purple);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease-out, width 0.2s ease, height 0.2s ease;
+      mix-blend-mode: difference;
+    }
+
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--neon-cyan);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.3s ease-out, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+      opacity: 0.5;
+    }
+
+    /* NEW: Enhanced navigation */
+    .nav-link {
+      position: relative;
+      padding: 0.5rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--neon-cyan), var(--neon-pink));
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* NEW: Contact section enhancements */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .contact-info {
+      background: linear-gradient(145deg, rgba(31, 41, 55, 0.6), rgba(17, 24, 39, 0.6));
+      padding: 2rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(168, 85, 247, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 1rem;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    /* Dark mode toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+    }
+
+    /* Accessibility improvements */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Form validation styles */
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      background: rgba(31, 41, 55, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--neon-cyan);
+      box-shadow: 0 0 0 2px rgba(0, 243, 255, 0.2);
+    }
+
+    .form-input.error {
+      border-color: #f87171;
+    }
+
+    .error-message {
+      color: #f87171;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+    }
+
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: rgba(17, 24, 39, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 99;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+    }
+
+    /* NEW: Section spacing */
+    section {
+      padding: 5rem 1rem;
+    }
+
+    /* NEW: Active section highlighting */
+    .section-active {
+      position: relative;
+    }
+
+    .section-active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(to bottom, var(--neon-cyan), var(--neon-pink));
+      border-radius: 2px;
+    }
+
+    /* NEW: Enhanced hero section */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(168, 85, 247, 0.2);
+      color: var(--neon-purple);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    /* Futuristic UI elements */
+    .holographic-line {
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--neon-cyan), transparent);
+      margin: 1.5rem 0;
+      width: 100%;
+    }
+
+    .cyber-button {
+      background: transparent;
+      color: white;
+      border: 1px solid var(--neon-cyan);
+      padding: 0.75rem 1.5rem;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.9rem;
+    }
+
+    .cyber-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.4), transparent);
+      transition: all 0.5s ease;
+    }
+
+    .cyber-button:hover::before {
+      left: 100%;
+    }
+
+    .cyber-button:hover {
+      background: rgba(0, 243, 255, 0.1);
+      box-shadow: 0 0 15px var(--neon-cyan);
+    }
+
+    /* Grid background effect */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(rgba(168, 85, 247, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 85, 247, 0.1) 1px, transparent 1px);
+      background-size: 50px 50px;
+      z-index: -2;
+      perspective: 1000px;
+      transform-style: preserve-3d;
+      transform: rotateX(60deg) translateZ(-100px);
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      from {
+        background-position: 0 0;
+      }
+
+      to {
+        background-position: 50px 50px;
+      }
+    }
+
+    /* Mobile menu */
+    .mobile-menu-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 21px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      height: 3px;
+      width: 100%;
+      background: white;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn.active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+
+    .mobile-menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-btn.active span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: var(--header-height);
+      left: 0;
+      width: 100%;
+      background: rgba(17, 24, 39, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 40;
+    }
+
+    .mobile-menu.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .mobile-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* NEW: Floating elements */
+    .floating-element {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+      filter: blur(40px);
+      opacity: 0.3;
+      z-index: -1;
+      animation: floatAround 15s infinite linear;
+    }
+
+    .floating-element:nth-child(1) {
+      top: 10%;
+      left: 10%;
+      width: 120px;
+      height: 120px;
+      animation-delay: 0s;
+      animation-duration: 20s;
+    }
+
+    .floating-element:nth-child(2) {
+      top: 60%;
+      right: 10%;
+      width: 80px;
+      height: 80px;
+      animation-delay: 5s;
+      animation-duration: 25s;
+    }
+
+    .floating-element:nth-child(3) {
+      bottom: 20%;
+      left: 20%;
+      width: 60px;
+      height: 60px;
+      animation-delay: 10s;
+      animation-duration: 15s;
+    }
+
+    /* NEW: Animated gradient background */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #1a1a2e);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      z-index: -3;
+    }
+
+    /* NEW: Code rain effect */
+    .code-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.1;
+    }
+
+    /* NEW: Glitch text effect */
+    .glitch-text {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch-text::before,
+    .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .glitch-text::before {
+      left: 2px;
+      text-shadow: -2px 0 var(--neon-cyan);
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+
+    .glitch-text::after {
+      left: -2px;
+      text-shadow: -2px 0 var(--neon-pink);
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+
+    /* NEW: Animated border */
+    .animated-border {
+      position: relative;
+      border-radius: 1rem;
+      overflow: hidden;
+    }
+
+    .animated-border::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-purple), var(--neon-cyan));
+      background-size: 400%;
+      border-radius: 1rem;
+      z-index: -1;
+      animation: glowing 20s linear infinite;
+    }
+
+    /* NEW: Magnetic buttons */
+    .magnetic-btn {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+    /* NEW: Text reveal animation */
+    .text-reveal {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .text-reveal::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--dark-bg);
+      animation: textReveal 1.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+    }
+
+    /* NEW: Parallax elements */
+    .parallax-element {
+      will-change: transform;
+    }
+
+    /* NEW: Enhanced card animations */
+    .card-hover-effect {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .card-hover-effect:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 243, 255, 0.3);
+    }
+
+    /* NEW: Particle trail effect */
+    .particle-trail {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--neon-cyan);
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    /* NEW: Enhanced scroll indicator */
+    .scroll-indicator {
+      position: fixed;
+      right: 30px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .scroll-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .scroll-dot.active {
+      background: var(--neon-cyan);
+      box-shadow: 0 0 10px var(--neon-cyan);
+      transform: scale(1.2);
+    }
+
+    /* NEW: Holographic effect */
+    .holographic-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .holographic-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transform: rotate(45deg);
+      animation: holographic 3s linear infinite;
+      pointer-events: none;
+    }
+
+    /* NEW: Advanced animations */
+    .morphing-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.1;
+    }
+
+    .morph-shape {
+      position: absolute;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink));
+      border-radius: 50%;
+      filter: blur(20px);
+      animation: morph 8s ease-in-out infinite;
+    }
+
+    .morph-shape:nth-child(1) {
+      width: 150px;
+      height: 150px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .morph-shape:nth-child(2) {
+      width: 100px;
+      height: 100px;
+      top: 60%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+
+    .morph-shape:nth-child(3) {
+      width: 120px;
+      height: 120px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+
+    .morph-shape:nth-child(4) {
+      width: 80px;
+      height: 80px;
+      top: 30%;
+      right: 25%;
+      animation-delay: 6s;
+    }
+
+    /* NEW: Advanced form animations */
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      color: #a8bbd2;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      background: rgba(31, 41, 55, 0.6);
+      padding: 0 0.5rem;
+    }
+
+    .form-input:focus+.form-label,
+    .form-input:not(:placeholder-shown)+.form-label {
+      top: -0.5rem;
+      left: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--neon-cyan);
+    }
+
+    /* NEW: Loading animation for form submission */
+    .submit-loader {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid var(--neon-cyan);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto;
+    }
+
+    /* NEW: Success animation */
+    .success-checkmark {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .check-icon {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      border-radius: 50%;
+      box-sizing: content-box;
+      border: 4px solid var(--neon-green);
+    }
+
+    .check-icon::before {
+      top: 3px;
+      left: -2px;
+      width: 30px;
+      transform-origin: 100% 50%;
+      border-radius: 100px 0 0 100px;
+    }
+
+    .check-icon::after {
+      top: 0;
+      left: 30px;
+      width: 60px;
+      transform-origin: 0 50%;
+      border-radius: 0 100px 100px 0;
+      animation: rotate-circle 4.25s ease-in;
+    }
+
+    .check-icon::before,
+    .check-icon::after {
+      content: '';
+      height: 100px;
+      position: absolute;
+      background: transparent;
+      transform: rotate(-45deg);
+    }
+
+    .icon-line {
+      height: 5px;
+      background-color: var(--neon-green);
+      display: block;
+      border-radius: 2px;
+      position: absolute;
+      z-index: 10;
+    }
+
+    .icon-line.line-tip {
+      top: 46px;
+      left: 14px;
+      width: 25px;
+      transform: rotate(45deg);
+      animation: icon-line-tip 0.75s;
+    }
+
+    .icon-line.line-long {
+      top: 38px;
+      right: 8px;
+      width: 47px;
+      transform: rotate(-45deg);
+      animation: icon-line-long 0.75s;
+    }
+
+    /* Advanced Popup Styles */
+    .advanced-popup {
+      max-width: 600px;
+      padding: 3rem;
+    }
+
+    .popup-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .popup-body {
+      margin-bottom: 2rem;
+    }
+
+    .tech-stack {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .tech-badge {
+      background: rgba(168, 85, 247, 0.2);
+      color: var(--neon-purple);
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .popup-footer {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .advanced-close {
+      top: -20px;
+      right: -20px;
+      width: 45px;
+      height: 45px;
+      font-size: 1.8rem;
+    }
+
+    /* Animations */
+    @keyframes glowing {
+      0% {
+        background-position: 0 0;
+      }
+
+      50% {
+        background-position: 400% 0;
+      }
+
+      100% {
+        background-position: 0 0;
+      }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 5px var(--neon-cyan);
+      }
+
+      50% {
+        box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-pink);
+      }
+
+      100% {
+        box-shadow: 0 0 5px var(--neon-cyan);
+      }
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes floatAround {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      25% {
+        transform: translate(100px, 50px) rotate(90deg);
+      }
+
+      50% {
+        transform: translate(50px, 100px) rotate(180deg);
+      }
+
+      75% {
+        transform: translate(-50px, 50px) rotate(270deg);
+      }
+
+      100% {
+        transform: translate(0, 0) rotate(360deg);
+      }
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes glitch-anim {
+      0% {
+        clip: rect(42px, 9999px, 44px, 0);
+      }
+
+      5% {
+        clip: rect(12px, 9999px, 59px, 0);
+      }
+
+      10% {
+        clip: rect(48px, 9999px, 29px, 0);
+      }
+
+      15% {
+        clip: rect(42px, 9999px, 73px, 0);
+      }
+
+      20% {
+        clip: rect(63px, 9999px, 27px, 0);
+      }
+
+      25% {
+        clip: rect(34px, 9999px, 55px, 0);
+      }
+
+      30% {
+        clip: rect(86px, 9999px, 73px, 0);
+      }
+
+      35% {
+        clip: rect(20px, 9999px, 20px, 0);
+      }
+
+      40% {
+        clip: rect(26px, 9999px, 60px, 0);
+      }
+
+      45% {
+        clip: rect(25px, 9999px, 66px, 0);
+      }
+
+      50% {
+        clip: rect(57px, 9999px, 98px, 0);
+      }
+
+      55% {
+        clip: rect(5px, 9999px, 46px, 0);
+      }
+
+      60% {
+        clip: rect(82px, 9999px, 31px, 0);
+      }
+
+      65% {
+        clip: rect(54px, 9999px, 27px, 0);
+      }
+
+      70% {
+        clip: rect(28px, 9999px, 99px, 0);
+      }
+
+      75% {
+        clip: rect(45px, 9999px, 69px, 0);
+      }
+
+      80% {
+        clip: rect(23px, 9999px, 85px, 0);
+      }
+
+      85% {
+        clip: rect(54px, 9999px, 84px, 0);
+      }
+
+      90% {
+        clip: rect(45px, 9999px, 47px, 0);
+      }
+
+      95% {
+        clip: rect(37px, 9999px, 20px, 0);
+      }
+
+      100% {
+        clip: rect(4px, 9999px, 91px, 0);
+      }
+    }
+
+    @keyframes glitch-anim2 {
+      0% {
+        clip: rect(65px, 9999px, 100px, 0);
+      }
+
+      5% {
+        clip: rect(52px, 9999px, 74px, 0);
+      }
+
+      10% {
+        clip: rect(79px, 9999px, 85px, 0);
+      }
+
+      15% {
+        clip: rect(75px, 9999px, 5px, 0);
+      }
+
+      20% {
+        clip: rect(67px, 9999px, 61px, 0);
+      }
+
+      25% {
+        clip: rect(14px, 9999px, 79px, 0);
+      }
+
+      30% {
+        clip: rect(1px, 9999px, 66px, 0);
+      }
+
+      35% {
+        clip: rect(86px, 9999px, 30px, 0);
+      }
+
+      40% {
+        clip: rect(23px, 9999px, 98px, 0);
+      }
+
+      45% {
+        clip: rect(85px, 9999px, 72px, 0);
+      }
+
+      50% {
+        clip: rect(71px, 9999px, 75px, 0);
+      }
+
+      55% {
+        clip: rect(2px, 9999px, 48px, 0);
+      }
+
+      60% {
+        clip: rect(30px, 9999px, 16px, 0);
+      }
+
+      65% {
+        clip: rect(59px, 9999px, 50px, 0);
+      }
+
+      70% {
+        clip: rect(41px, 9999px, 62px, 0);
+      }
+
+      75% {
+        clip: rect(2px, 9999px, 82px, 0);
+      }
+
+      80% {
+        clip: rect(47px, 9999px, 73px, 0);
+      }
+
+      85% {
+        clip: rect(3px, 9999px, 27px, 0);
+      }
+
+      90% {
+        clip: rect(26px, 9999px, 55px, 0);
+      }
+
+      95% {
+        clip: rect(42px, 9999px, 97px, 0);
+      }
+
+      100% {
+        clip: rect(38px, 9999px, 49px, 0);
+      }
+    }
+
+    @keyframes textReveal {
+      0% {
+        transform: translateX(-101%);
+      }
+
+      50% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(101%);
+      }
+    }
+
+    @keyframes holographic {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+
+    @keyframes morph {
+
+      0%,
+      100% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        transform: scale(1);
+      }
+
+      25% {
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+        transform: scale(1.1);
+      }
+
+      50% {
+        border-radius: 50% 60% 30% 60% / 40% 40% 60% 50%;
+        transform: scale(1.05);
+      }
+
+      75% {
+        border-radius: 40% 60% 70% 30% / 60% 30% 70% 40%;
+        transform: scale(1.1);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes icon-line-tip {
+      0% {
+        width: 0;
+        left: 1px;
+        top: 19px;
+      }
+
+      54% {
+        width: 0;
+        left: 1px;
+        top: 19px;
+      }
+
+      70% {
+        width: 50px;
+        left: -8px;
+        top: 37px;
+      }
+
+      84% {
+        width: 17px;
+        left: 21px;
+        top: 48px;
+      }
+
+      100% {
+        width: 25px;
+        left: 14px;
+        top: 45px;
+      }
+    }
+
+    @keyframes icon-line-long {
+      0% {
+        width: 0;
+        right: 46px;
+        top: 54px;
+      }
+
+      65% {
+        width: 0;
+        right: 46px;
+        top: 54px;
+      }
+
+      84% {
+        width: 55px;
+        right: 0px;
+        top: 35px;
+      }
+
+      100% {
+        width: 47px;
+        right: 8px;
+        top: 38px;
+      }
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
+    .float {
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .pulse {
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .rotate {
+      animation: rotate 20s linear infinite;
+    }
+
+    /* Enhanced footer */
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-link {
+      color: #a8bbd2;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: white;
+    }
+
+    /* Social Media Links Styles */
+    .social-link {
+      position: fixed;
+      bottom: 6px;
+      z-index: 50;
+      transition: all 0.3s ease;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-link:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .social-link img {
+      width: 24px;
+      height: 24px;
+      transition: transform 0.3s ease;
+    }
+
+    .social-link:hover img {
+      transform: scale(1.2);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+
+      .cursor,
+      .cursor-follower {
+        display: none;
+      }
+
+      body {
+        cursor: auto;
+      }
+
+      .theme-toggle {
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+      }
+
+      .back-to-top {
+        bottom: 70px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+      }
+
+      .mobile-menu-btn {
+        display: flex;
+      }
+
+      .desktop-nav {
+        display: none;
+      }
+
+      section {
+        padding: 3rem 1rem;
+      }
+
+      .social-link {
+        width: 45px;
+        height: 45px;
+      }
+
+      .social-link img {
+        width: 20px;
+        height: 20px;
+      }
+
+      .popup-footer {
+        flex-direction: column;
+      }
+
+      .advanced-popup {
+        padding: 2rem;
+      }
+
+      .scroll-indicator {
+        right: 15px;
+      }
+
+      .scroll-dot {
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 2.5rem !important;
+      }
+
+      .hero-content p {
+        font-size: 1.1rem !important;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body class="text-white">
+  <div id="particles-js"></div>
+  <div class="grid-bg"></div>
+  <div class="animated-bg"></div>
+  <div class="code-rain" id="codeRain"></div>
+  <div class="morphing-shapes">
+    <div class="morph-shape"></div>
+    <div class="morph-shape"></div>
+    <div class="morph-shape"></div>
+    <div class="morph-shape"></div>
+  </div>
+
+  <!-- Floating elements -->
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator" id="scrollIndicator">
+    <div class="scroll-dot" data-section="home"></div>
+    <div class="scroll-dot" data-section="about"></div>
+    <div class="scroll-dot" data-section="skills"></div>
+    <div class="scroll-dot" data-section="pricing"></div>
+    <div class="scroll-dot" data-section="contact"></div>
+  </div>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </button>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 15l-6-6-6 6" />
+    </svg>
+  </button>
+
+  <!-- Enhanced Navigation -->
+  <nav class="fixed top-0 left-0 w-full bg-[#111827]/90 backdrop-blur-lg z-50 shadow-lg border-b border-gray-800"
+    style="height: var(--header-height);">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-6 h-full">
+      <h1 class="text-xl font-bold gradient-text pulse">Gourav</h1>
+
+      <!-- Desktop Navigation -->
+      <div class="desktop-nav space-x-6 text-sm">
+        <a href="#home" class="nav-link text-gray-300 hover:text-white">Home</a>
+        <a href="#about" class="nav-link text-gray-300 hover:text-white">About</a>
+        <a href="#skills" class="nav-link text-gray-300 hover:text-white">Skills</a>
+        <a href="#pricing" class="nav-link text-gray-300 hover:text-white">Pricing</a>
+        <a href="#contact" class="nav-link text-gray-300 hover:text-white">Contact</a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-nav">
+        <a href="#home" class="nav-link text-gray-300 hover:text-white text-lg">Home</a>
+        <a href="#about" class="nav-link text-gray-300 hover:text-white text-lg">About</a>
+        <a href="#skills" class="nav-link text-gray-300 hover:text-white text-lg">Skills</a>
+        <a href="#pricing" class="nav-link text-gray-300 hover:text-white text-lg">Pricing</a>
+        <a href="#contact" class="nav-link text-gray-300 hover:text-white text-lg">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Enhanced Hero Section -->
+  <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <div class="hero-content text-center max-w-4xl mx-auto px-6">
+      <h1 class="text-4xl sm:text-6xl font-bold gradient-text mb-6 float glitch-text" data-text="Hi, I'm Gourav Panwar"
+        id="typewriter"></h1>
+      <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto text-reveal">I create <span
+          class="gradient-text font-semibold">digital experiences</span> that blend innovative design with cutting-edge
+        technology to help businesses thrive online.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="#skills" class="cyber-button magnetic-btn">View My Skills</a>
+        <a href="#contact" class="cyber-button magnetic-btn" style="border-color: var(--neon-pink);">Hire Me</a>
+      </div>
+      <div class="mt-12 text-purple-400 text-2xl float" style="animation-duration: 3s;">↓</div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="text-center px-6 max-w-4xl mx-auto">
+    <h2 class="text-3xl font-bold gradient-text mb-4">About Me</h2>
+    <div class="holographic-line"></div>
+    <p class="text-gray-300 text-lg mb-6">I'm Gourav Panwar, a passionate freelance web developer and designer with a
+      focus on creating modern, responsive, and beautiful websites. I bring ideas to life through clean code and
+      creative design.</p>
+    <p class="text-gray-300 text-lg">With expertise in both front-end and back-end technologies, I deliver complete web
+      solutions that are not only visually appealing but also performant and user-friendly.</p>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="px-6 max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold gradient-text text-center mb-6">Skills</h2>
+    <div class="holographic-line mx-auto" style="width: 80%;"></div>
+    <div class="stage mt-8" id="skills-stage">
+      <div class="cylinder" id="skills-cylinder" role="region" aria-roledescription="carousel"></div>
+      <div class="progress" id="skills-progress" aria-label="Carousel progress"></div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="px-6 max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold gradient-text text-center mb-6">Pricing</h2>
+    <div class="holographic-line mx-auto" style="width: 80%;"></div>
+    <div class="stage mt-8" id="pricing-stage">
+      <div class="cylinder" id="pricing-cylinder" role="region" aria-roledescription="carousel"></div>
+      <div class="progress" id="pricing-progress" aria-label="Carousel progress"></div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="px-6 max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold gradient-text text-center mb-6">Get In Touch</h2>
+    <div class="holographic-line mx-auto" style="width: 80%;"></div>
+
+    <div class="contact-grid">
+      <div class="contact-info animated-border card-hover-effect">
+        <h3 class="text-xl font-bold text-white mb-4">Contact Information</h3>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-white font-semibold">Email</h4>
+            <p class="text-gray-300">panwargourav999@gmail.com</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+              </path>
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-white font-semibold">Phone</h4>
+            <p class="text-gray-300">+91 93434 38021</p>
+          </div>
+        </div>
+
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <div>
+            <h4 class="text-white font-semibold">Location</h4>
+            <p class="text-gray-300">India, Madhya Pradesh, Indore</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="animated-border card-hover-effect">
+        <form id="contactForm" class="space-y-4 p-6">
+          <div class="form-group">
+            <input type="text" id="name" class="form-input" placeholder=" " required />
+            <label for="name" class="form-label">Your Name</label>
+            <div id="nameError" class="error-message"></div>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" class="form-input" placeholder=" " required />
+            <label for="email" class="form-label">Your Email</label>
+            <div id="emailError" class="error-message"></div>
+          </div>
+          <div class="form-group">
+            <input type="text" id="subject" class="form-input" placeholder=" " required />
+            <label for="subject" class="form-label">Subject</label>
+            <div id="subjectError" class="error-message"></div>
+          </div>
+          <div class="form-group">
+            <textarea id="message" rows="4" class="form-input" placeholder=" " required></textarea>
+            <label for="message" class="form-label">Your Message</label>
+            <div id="messageError" class="error-message"></div>
+          </div>
+          <button type="submit" class="cyber-button w-full magnetic-btn" id="submitBtn">
+            <span id="submitText">Send Message</span>
+            <div class="submit-loader" id="submitLoader"></div>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Media Links -->
+  <a href="https://wa.me/+919343438021" target="_blank" class="social-link bg-green-500 hover:bg-green-600 p-3"
+    style="right: 6px; bottom: 80px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
+  </a>
+  <a href="https://www.linkedin.com/in/gouravraj-singh-panwar-073aa1372" target="_blank"
+    class="social-link bg-blue-400 hover:bg-blue-500 p-3" style="left: 6px; bottom: 80px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" />
+  </a>
+  <a href="https://github.com/Gouravraj-dev" target="_blank" class="social-link bg-gray-800 hover:bg-gray-900 p-3"
+    style="right: 6px; bottom: 140px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub" />
+  </a>
+  <a href="https://instagram.com/itz_gouravpanwar" target="_blank" class="social-link bg-pink-600 hover:bg-pink-700 p-3"
+    style="left: 6px; bottom: 140px;">
+    <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" />
+  </a>
+
+  <!-- Enhanced Footer -->
+  <footer class="py-10 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="footer-grid">
+        <div>
+          <h3 class="text-xl font-bold gradient-text mb-4">Gourav Panwar</h3>
+          <p class="text-gray-300">Creating digital experiences that make a difference.</p>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-4">Quick Links</h4>
+          <div class="footer-links">
+            <a href="#home" class="footer-link">Home</a>
+            <a href="#about" class="footer-link">About</a>
+            <a href="#skills" class="footer-link">Skills</a>
+            <a href="#contact" class="footer-link">Contact</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-4">Services</h4>
+          <div class="footer-links">
+            <a href="#" class="footer-link">Web Development</a>
+            <a href="#" class="footer-link">UI/UX Design</a>
+            <a href="#" class="footer-link">E-commerce</a>
+            <a href="#" class="footer-link">Consulting</a>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="text-white font-bold mb-4">Connect</h4>
+          <div class="footer-links">
+            <a href="https://www.linkedin.com/in/gouravraj-singh-panwar-073aa1372" target="_blank"
+              class="footer-link">LinkedIn</a>
+            <a href="https://github.com/Gouravraj-dev" target="_blank" class="footer-link">GitHub</a>
+            <a href="https://wa.me/+919343438021" target="_blank" class="footer-link">WhatsApp</a>
+            <a href="https://instagram.com/itz_gouravpanwar" target="_blank" class="footer-link">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-800 mt-8 pt-6 text-center">
+        <p class="text-gray-400">© 2023 <span class="gradient-text font-semibold">Gourav Panwar</span>. All rights
+          reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursor-follower"></div>
+
+  <script>
+    // Initialize EmailJS
+    (function () {
+      emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+    })();
+
+    // Initialize variables
+    let activeCard = null;
+    let cardClone = null;
+    let isAnimating = false;
+    let isDarkMode = true;
+
+    // Enhanced card click handler without hand animation
+    function handleCardClick(e) {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      const card = e.currentTarget;
+      activeCard = card;
+
+      // Get card position and dimensions
+      const rect = card.getBoundingClientRect();
+
+      // Create card clone for animation
+      cardClone = card.cloneNode(true);
+      cardClone.classList.add('card-clone');
+      gsap.set(cardClone, {
+        x: rect.left,
+        y: rect.top,
+        width: rect.width,
+        height: rect.height,
+        opacity: 1
+      });
+      document.body.appendChild(cardClone);
+
+      // Hide original card
+      gsap.set(card, { opacity: 0 });
+
+      // Enhanced animation timeline without hand
+      const timeline = gsap.timeline();
+
+      timeline
+        .to(cardClone, {
+          x: window.innerWidth / 2 - cardClone.offsetWidth / 2,
+          y: window.innerHeight / 2 - cardClone.offsetHeight / 2,
+          scale: 1.3,
+          rotation: 0,
+          duration: 0.8,
+          ease: "back.out(1.2)",
+          onComplete: () => {
+            showAdvancedPopup();
+            isAnimating = false;
+          }
+        });
+    }
+
+    // Advanced popup effect
+    function showAdvancedPopup() {
+      const title = activeCard.getAttribute('data-title');
+      const desc = activeCard.getAttribute('data-desc');
+
+      const popup = document.createElement('div');
+      popup.className = 'popup-overlay';
+      popup.innerHTML = `
+        <div class="popup-content advanced-popup">
+          <div class="popup-header">
+            <h2 class="text-3xl font-bold gradient-text mb-4">${title}</h2>
+            <div class="holographic-line"></div>
+          </div>
+          <div class="popup-body">
+            <p class="text-gray-300 text-lg mb-6">${desc}</p>
+            <div class="tech-stack">
+              <span class="tech-badge">Web Development</span>
+              <span class="tech-badge">UI/UX Design</span>
+              <span class="tech-badge">Responsive</span>
+            </div>
+          </div>
+          <div class="popup-footer">
+            <button class="cyber-button magnetic-btn" onclick="closeAdvancedPopup()">Close</button>
+            <button class="cyber-button magnetic-btn" style="border-color: var(--neon-green);" onclick="inquireAboutService('${title}')">Inquire</button>
+          </div>
+          <button class="close-btn advanced-close" onclick="closeAdvancedPopup()">×</button>
+        </div>`;
+
+      document.body.appendChild(popup);
+
+      setTimeout(() => {
+        popup.classList.add('active');
+
+        // Add entrance animation to popup content
+        gsap.fromTo('.advanced-popup',
+          { scale: 0.8, rotationY: 90, opacity: 0 },
+          { scale: 1, rotationY: 0, opacity: 1, duration: 0.8, ease: "back.out(1.2)" }
+        );
+      }, 10);
+    }
+
+    function closeAdvancedPopup() {
+      const popup = document.querySelector('.popup-overlay');
+
+      // Exit animation
+      gsap.to('.advanced-popup', {
+        scale: 0.8,
+        rotationY: -90,
+        opacity: 0,
+        duration: 0.6,
+        ease: "back.in(1.2)",
+        onComplete: () => {
+          popup.classList.remove('active');
+
+          setTimeout(() => {
+            popup.remove();
+            resetCardAnimation();
+          }, 300);
+        }
+      });
+    }
+
+    function resetCardAnimation() {
+      isAnimating = true;
+
+      const rect = activeCard.getBoundingClientRect();
+
+      gsap.set(cardClone, { opacity: 1 });
+
+      const reverseTimeline = gsap.timeline();
+
+      reverseTimeline
+        .to(cardClone, {
+          x: rect.left,
+          y: rect.top,
+          scale: 1,
+          rotation: 0,
+          duration: 0.8,
+          ease: "power2.inOut",
+          onComplete: () => {
+            cardClone.remove();
+            gsap.set(activeCard, { opacity: 1 });
+            activeCard = null;
+            isAnimating = false;
+          }
+        });
+    }
+
+    function inquireAboutService(serviceName) {
+      closeAdvancedPopup();
+
+      // Auto-fill the contact form
+      document.getElementById('subject').value = `Inquiry about ${serviceName}`;
+      document.getElementById('message').value = `Hello Gourav,\n\nI'm interested in your ${serviceName} service. Please provide more details.\n\nBest regards,`;
+
+      // Scroll to contact form
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+
+      showMessage(`Inquiry for ${serviceName} has been prepared!`, 'success');
+    }
+
+    // Show message function
+    function showMessage(msg, type = 'success') {
+      const message = document.createElement('div');
+      message.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white`;
+      message.textContent = msg;
+      document.body.appendChild(message);
+
+      gsap.to(message, {
+        x: 0,
+        duration: 0.5,
+        ease: "back.out(1.2)"
+      });
+
+      setTimeout(() => {
+        gsap.to(message, {
+          x: 300,
+          duration: 0.5,
+          ease: "back.in(1.2)",
+          onComplete: () => {
+            message.remove();
+          }
+        });
+      }, 3000);
+    }
+
+    // Enhanced form validation
+    function validateForm() {
+      let isValid = true;
+
+      document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+      document.querySelectorAll('.form-input').forEach(el => el.classList.remove('error'));
+
+      const name = document.getElementById('name').value.trim();
+      if (name === '') {
+        document.getElementById('nameError').textContent = 'Name is required';
+        document.getElementById('name').classList.add('error');
+        isValid = false;
+      }
+
+      const email = document.getElementById('email').value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (email === '') {
+        document.getElementById('emailError').textContent = 'Email is required';
+        document.getElementById('email').classList.add('error');
+        isValid = false;
+      } else if (!emailRegex.test(email)) {
+        document.getElementById('emailError').textContent = 'Please enter a valid email';
+        document.getElementById('email').classList.add('error');
+        isValid = false;
+      }
+
+      const subject = document.getElementById('subject').value.trim();
+      if (subject === '') {
+        document.getElementById('subjectError').textContent = 'Subject is required';
+        document.getElementById('subject').classList.add('error');
+        isValid = false;
+      }
+
+      const message = document.getElementById('message').value.trim();
+      if (message === '') {
+        document.getElementById('messageError').textContent = 'Message is required';
+        document.getElementById('message').classList.add('error');
+        isValid = false;
+      }
+
+      return isValid;
+    }
+
+    // Enhanced form submission with email functionality
+    async function submitForm(formData) {
+      const submitBtn = document.getElementById('submitBtn');
+      const submitText = document.getElementById('submitText');
+      const submitLoader = document.getElementById('submitLoader');
+
+      // Show loading state
+      submitText.style.display = 'none';
+      submitLoader.style.display = 'block';
+      submitBtn.disabled = true;
+
+      try {
+        // EmailJS configuration - Replace with your actual credentials
+        const serviceID = 'service_vp1uuvr'; // Replace with your EmailJS service ID
+        const templateID = 'template_4pfb3ju'; // Replace with your EmailJS template ID
+        const userID = 'xlRwrVTURaLPUPOU5'; // Replace with your EmailJS user ID
+
+        // Send email using EmailJS
+        await emailjs.send(serviceID, templateID, {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_email: 'panwargourav999@gmail.com'
+        }, userID);
+
+        showMessage('Thank you for your message! I will get back to you soon.', 'success');
+        document.getElementById('contactForm').reset();
+
+      } catch (error) {
+        console.error('EmailJS Error:', error);
+
+        // Fallback to Formspree if EmailJS fails
+        try {
+          const response = await fetch('https://formspree.io/f/mrbywwze', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: formData.name,
+              email: formData.email,
+              subject: formData.subject,
+              message: formData.message
+            })
+          });
+
+          if (response.ok) {
+            showMessage('Thank you for your message! I will get back to you soon.', 'success');
+            document.getElementById('contactForm').reset();
+          } else {
+            throw new Error('Both EmailJS and Formspree failed');
+          }
+        } catch (fallbackError) {
+          console.error('Fallback error:', fallbackError);
+          showMessage('There was an error sending your message. Please try again later.', 'error');
+        }
+      } finally {
+        // Reset button state
+        submitText.style.display = 'block';
+        submitLoader.style.display = 'none';
+        submitBtn.disabled = false;
+      }
+    }
+
+    // Toggle theme
+    function toggleTheme() {
+      isDarkMode = !isDarkMode;
+
+      if (isDarkMode) {
+        document.body.style.background = 'radial-gradient(circle at top left, var(--dark-bg), #302b63, #24243e)';
+        document.documentElement.style.setProperty('--dark-bg', '#0f0c29');
+      } else {
+        document.body.style.background = 'radial-gradient(circle at top left, #f0f4ff, #d9e2ff, #c7d2fe)';
+        document.documentElement.style.setProperty('--dark-bg', '#f0f4ff');
+      }
+
+      localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+    }
+
+    // Enhanced back to top functionality
+    function handleBackToTop() {
+      const backToTopBtn = document.getElementById('backToTop');
+
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTopBtn.classList.add('visible');
+        } else {
+          backToTopBtn.classList.remove('visible');
+        }
+      });
+
+      backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Mobile menu functionality
+    function initMobileMenu() {
+      const menuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      menuBtn.addEventListener('click', () => {
+        menuBtn.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          menuBtn.classList.remove('active');
+          mobileMenu.classList.remove('active');
+        });
+      });
+    }
+
+    // Enhanced active section highlighting
+    function initActiveSection() {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const scrollDots = document.querySelectorAll('.scroll-dot');
+
+      window.addEventListener('scroll', () => {
+        let current = '';
+
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+
+          if (pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+          }
+        });
+
+        scrollDots.forEach(dot => {
+          dot.classList.remove('active');
+          if (dot.getAttribute('data-section') === current) {
+            dot.classList.add('active');
+          }
+        });
+      });
+
+      // Add click functionality to scroll dots
+      scrollDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const sectionId = dot.getAttribute('data-section');
+          const section = document.getElementById(sectionId);
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    }
+
+    // Enhanced magnetic button effect
+    function initMagneticButtons() {
+      const buttons = document.querySelectorAll('.magnetic-btn');
+
+      buttons.forEach(button => {
+        button.addEventListener('mousemove', (e) => {
+          const rect = button.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const deltaX = (x - centerX) / centerX;
+          const deltaY = (y - centerY) / centerY;
+
+          gsap.to(button, {
+            x: deltaX * 10,
+            y: deltaY * 10,
+            duration: 0.5,
+            ease: "power2.out"
+          });
+        });
+
+        button.addEventListener('mouseleave', () => {
+          gsap.to(button, {
+            x: 0,
+            y: 0,
+            duration: 0.5,
+            ease: "elastic.out(1, 0.3)"
+          });
+        });
+      });
+    }
+
+    // Enhanced code rain effect
+    function initCodeRain() {
+      const codeRain = document.getElementById('codeRain');
+      const characters = '01';
+      const columns = Math.floor(window.innerWidth / 20);
+
+      for (let i = 0; i < columns; i++) {
+        const column = document.createElement('div');
+        column.style.position = 'absolute';
+        column.style.top = '-100px';
+        column.style.left = `${i * 20}px`;
+        column.style.width = '2px';
+        column.style.color = 'var(--neon-cyan)';
+        column.style.fontSize = '16px';
+        column.style.fontFamily = 'monospace';
+        column.style.opacity = '0.7';
+        column.style.textShadow = '0 0 5px var(--neon-cyan)';
+        column.style.animation = `fall ${Math.random() * 5 + 3}s linear infinite`;
+        column.style.animationDelay = `${Math.random() * 5}s`;
+
+        let content = '';
+        for (let j = 0; j < 20; j++) {
+          content += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
+        }
+        column.innerHTML = content;
+
+        codeRain.appendChild(column);
+      }
+    }
+
+    // Enhanced scroll animations
+    function initScrollAnimations() {
+      gsap.registerPlugin(ScrollTrigger);
+
+      gsap.utils.toArray('section').forEach(section => {
+        gsap.from(section, {
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      });
+
+      // Enhanced parallax effect
+      gsap.to('.floating-element', {
+        y: (i, el) => (i % 2 === 0 ? -20 : 20),
+        scrollTrigger: {
+          trigger: 'body',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: true
+        }
+      });
+
+      // Morphing shapes animation
+      gsap.to('.morph-shape', {
+        scale: 1.2,
+        rotation: 360,
+        duration: 10,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut",
+        stagger: 2
+      });
+    }
+
+    // Enhanced cylindrical scroll effect - Mobile optimized
+    function initCylindricalScroll() {
+      const skillsData = [
+        { title: 'HTML5', subtitle: 'Semantic HTML and accessibility ready', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+        { title: 'CSS3', subtitle: 'Responsive styling with Flexbox/Grid', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+        { title: 'JavaScript', subtitle: 'DOM, Events, API and Logic', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+        { title: 'Tailwind CSS', subtitle: 'Utility-first modern UI', img: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg' },
+        { title: 'React', subtitle: 'Component based SPA', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+        { title: 'Node.js', subtitle: 'Server-side JavaScript runtime', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+        { title: 'MongoDB', subtitle: 'NoSQL database for modern apps', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
+        { title: 'Git', subtitle: 'Version control and collaboration', img: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg' }
+      ];
+
+      const pricingData = [
+        { title: 'Basic Website', subtitle: '1 Page - ₹4k to ₹7k', content: '<h4 class="text-purple-400 font-bold text-lg mb-1">Basic</h4><p>₹4k – ₹7k</p><ul class="text-sm text-gray-300 mt-2 space-y-1"><li>• Single Page Design</li><li>• Responsive Layout</li><li>• Basic SEO</li><li>• 1 Week Delivery</li></ul>' },
+        { title: 'Pro Website', subtitle: 'Multi-page - ₹10k to ₹25k', content: '<h4 class="text-purple-400 font-bold text-lg mb-1">Pro</h4><p>₹10k – ₹25k</p><ul class="text-sm text-gray-300 mt-2 space-y-1"><li>• Up to 5 Pages</li><li>• Custom Design</li><li>• Advanced SEO</li><li>• Contact Form</li><li>• 2-3 Weeks Delivery</li></ul>' },
+        { title: 'Premium Website', subtitle: 'Advanced Design - ₹30k to ₹60k', content: '<h4 class="text-purple-400 font-bold text-lg mb-1">Premium</h4><p>₹30k – ₹60k</p><ul class="text-sm text-gray-300 mt-2 space-y-1"><li>• E-commerce Features</li><li>• CMS Integration</li><li>• 4-6 Weeks Delivery</li></ul>' },
+        { title: 'Business Suite', subtitle: 'Web + App + Branding - ₹75k+', content: '<h4 class="text-purple-400 font-bold text-lg mb-1">Business</h4><p>₹75k+</p><ul class="text-sm text-gray-300 mt-2 space-y-1"><li>• Complete Web Solution</li><li><li>• Brand Identity</li><li>• Ongoing Support</li><li>• Custom Timeline</li></ul>' }
+      ];
+
+      const config = {
+        radiusCSSVariable: '--radius',
+        minRadius: 250,
+        friction: 0.88,
+        wheelSensitivity: 0.04,
+        dragSensitivity: 0.15,
+        autoRotationSpeed: 0.2,
+        autoRotationDelay: 3000,
+      };
+
+      initCarousel('skills', skillsData);
+      initCarousel('pricing', pricingData);
+
+      function initCarousel(type, dataItems) {
+        const cylinder = document.getElementById(`${type}-cylinder`);
+        const stage = document.getElementById(`${type}-stage`);
+        const progress = document.getElementById(`${type}-progress`);
+
+        let itemCount = dataItems.length;
+        let theta = 360 / itemCount;
+        let radius = Number(getComputedStyle(document.documentElement).getPropertyValue(config.radiusCSSVariable).replace('px', '')) || 420;
+        radius = Math.max(radius, config.minRadius);
+
+        let rotationY = 0;
+        let velocity = 0;
+        let isDragging = false;
+        let lastX = 0;
+        let lastTime = 0;
+        let isAutoRotating = true;
+        let autoRotationTimeout = null;
+        let isUserInteracting = false;
+        let animationFrameId = null;
+
+        function buildPanels() {
+          cylinder.innerHTML = '';
+          itemCount = dataItems.length;
+          theta = 360 / itemCount;
+
+          progress.innerHTML = '';
+          for (let i = 0; i < itemCount; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'progress-dot';
+            dot.setAttribute('data-index', i);
+            progress.appendChild(dot);
+          }
+
+          for (let i = 0; i < itemCount; i++) {
+            const item = dataItems[i];
+            const panel = document.createElement('article');
+            panel.className = 'panel card-hover-effect';
+            panel.setAttribute('role', 'group');
+            panel.setAttribute('aria-label', `${item.title} — ${item.subtitle}`);
+            panel.setAttribute('data-index', i);
+            panel.setAttribute('data-title', item.title);
+            panel.setAttribute('data-desc', item.subtitle);
+
+            if (type === 'skills') {
+              panel.innerHTML = `
+                <img alt="${item.title}" src="${item.img}" loading="lazy">
+                <h3>${item.title}</h3>
+                <p>${item.subtitle}</p>
+              `;
+            } else {
+              panel.innerHTML = item.content;
+            }
+
+            panel.addEventListener('click', handleCardClick);
+            cylinder.appendChild(panel);
+          }
+
+          updatePanels();
+          updateProgress();
+        }
+
+        function updatePanels() {
+          const panels = Array.from(cylinder.children);
+          const normalizedRotation = normalizeAngle(rotationY);
+
+          panels.forEach((el, i) => {
+            const angle = i * theta;
+            const isFront = isFrontForPanel(i);
+            const scale = isFront ? 'scale(1.05)' : '';
+            el.style.transform = `translate(-50%,-50%) rotateY(${angle}deg) translateZ(${radius}px) ${scale}`;
+
+            el.classList.toggle('front', isFront);
+            el.style.opacity = isFront ? '1' : '0.92';
+            el.style.filter = isFront ? 'saturate(1.05) contrast(1.02)' : 'saturate(.95) contrast(.96) blur(0px)';
+          });
+
+          cylinder.style.transform = `translateZ(0px) rotateY(${rotationY}deg)`;
+          updateProgress();
+        }
+
+        function updateProgress() {
+          const dots = Array.from(progress.children);
+          const currentIndex = getCurrentIndex();
+
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+          });
+        }
+
+        function isFrontForPanel(i) {
+          const angle = i * theta;
+          const normalized = ((rotationY + angle) % 360 + 360) % 360;
+          return normalized < theta / 2 || normalized > 360 - theta / 2;
+        }
+
+        function getCurrentIndex() {
+          const normalizedRotation = ((rotationY % 360) + 360) % 360;
+          let index = Math.round(normalizedRotation / theta) % itemCount;
+          return (index + itemCount) % itemCount;
+        }
+
+        function snapToNearest() {
+          const normalized = normalizeAngle(rotationY);
+          const targetRotation = Math.round(normalized / theta) * theta;
+          const diff = targetRotation - normalized;
+          const shortestDiff = ((diff + 180) % 360) - 180;
+
+          rotationY += shortestDiff;
+          updatePanels();
+        }
+
+        function animate() {
+          if (!isDragging) {
+            if (Math.abs(velocity) > 0.01) {
+              rotationY += velocity;
+              velocity *= config.friction;
+              updatePanels();
+            } else {
+              velocity = 0;
+
+              if (isAutoRotating && !isUserInteracting) {
+                rotationY += config.autoRotationSpeed;
+                updatePanels();
+              } else {
+                snapToNearest();
+              }
+            }
+          }
+          animationFrameId = requestAnimationFrame(animate);
+        }
+
+        function normalizeAngle(a) {
+          return ((a % 360) + 360) % 360;
+        }
+
+        function onUserInteraction() {
+          isUserInteracting = true;
+          clearTimeout(autoRotationTimeout);
+
+          autoRotationTimeout = setTimeout(() => {
+            isUserInteracting = false;
+          }, config.autoRotationDelay);
+        }
+
+        function onPointerDown(e) {
+          isDragging = true;
+          lastX = e.clientX ?? e.touches?.[0]?.clientX;
+          lastTime = performance.now();
+          velocity = 0;
+          onUserInteraction();
+        }
+
+        function onPointerMove(e) {
+          if (!isDragging) return;
+          const x = e.clientX ?? e.touches?.[0]?.clientX;
+          const dx = x - lastX;
+          const now = performance.now();
+          const dt = Math.max(16, now - lastTime);
+          const dAngle = (dx * config.dragSensitivity);
+          rotationY += dAngle;
+          velocity = (dAngle) / (dt / 16);
+          lastX = x;
+          lastTime = now;
+          updatePanels();
+        }
+
+        function onPointerUp() {
+          isDragging = false;
+          onUserInteraction();
+        }
+
+        // MODIFIED: Only horizontal wheel scroll and prevent vertical scroll
+        function onWheel(e) {
+          // Only use deltaX for horizontal scrolling, completely ignore deltaY
+          const delta = e.deltaX;
+          if (Math.abs(delta) > 0) {
+            const scrollAmount = delta * config.wheelSensitivity;
+            velocity += scrollAmount;
+            rotationY += scrollAmount;
+            updatePanels();
+            onUserInteraction();
+            e.preventDefault();
+          }
+        }
+
+        function onKey(e) {
+          if (e.key === 'ArrowLeft') {
+            rotationY -= theta;
+            updatePanels();
+          } else if (e.key === 'ArrowRight') {
+            rotationY += theta;
+            updatePanels();
+          }
+          // Ignore ArrowUp and ArrowDown
+          onUserInteraction();
+        }
+
+        cylinder.addEventListener('click', (e) => {
+          const panel = e.target.closest('.panel');
+          if (panel) {
+            const index = parseInt(panel.getAttribute('data-index'));
+            rotationY = -index * theta;
+            updatePanels();
+            onUserInteraction();
+          }
+        });
+
+        stage.addEventListener('pointerdown', onPointerDown, { passive: true });
+        stage.addEventListener('pointermove', onPointerMove, { passive: true });
+        stage.addEventListener('pointerup', onPointerUp, { passive: true });
+        stage.addEventListener('touchstart', onPointerDown, { passive: true });
+        stage.addEventListener('touchmove', onPointerMove, { passive: true });
+        stage.addEventListener('touchend', onPointerUp, { passive: true });
+        stage.addEventListener('wheel', onWheel, { passive: false });
+        window.addEventListener('keydown', onKey);
+
+        stage.addEventListener('mouseenter', () => {
+          isUserInteracting = true;
+        });
+        stage.addEventListener('mouseleave', () => {
+          if (!isDragging) {
+            isUserInteracting = false;
+          }
+        });
+
+        function onResize() {
+          const w = Math.min(window.innerWidth, 1100);
+          const base = window.innerWidth < 768 ? 200 : 420;
+          const newRadius = Math.max(config.minRadius, Math.round(base * (w / 1100)));
+          radius = newRadius;
+          document.documentElement.style.setProperty(config.radiusCSSVariable, radius + 'px');
+          updatePanels();
+        }
+
+        buildPanels();
+        onResize();
+        animationFrameId = requestAnimationFrame(animate);
+
+        window.addEventListener('resize', onResize);
+      }
+    }
+
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function () {
+      initCylindricalScroll();
+      initMobileMenu();
+      initActiveSection();
+      initMagneticButtons();
+      initCodeRain();
+      initScrollAnimations();
+
+      const cursor = document.getElementById("cursor");
+      const cursorFollower = document.getElementById("cursor-follower");
+
+      // Only enable custom cursor on desktop
+      if (window.innerWidth > 768) {
+        document.addEventListener("mousemove", (e) => {
+          cursor.style.left = e.clientX + "px";
+          cursor.style.top = e.clientY + "px";
+
+          gsap.to(cursorFollower, {
+            left: e.clientX,
+            top: e.clientY,
+            duration: 0.5
+          });
+        });
+
+        const interactiveElements = document.querySelectorAll('a, button, .panel, input, textarea');
+
+        interactiveElements.forEach(el => {
+          el.addEventListener('mouseenter', () => {
+            gsap.to(cursor, { scale: 1.5, duration: 0.3 });
+            gsap.to(cursorFollower, { scale: 1.5, opacity: 0.7, duration: 0.3 });
+          });
+
+          el.addEventListener('mouseleave', () => {
+            gsap.to(cursor, { scale: 1, duration: 0.3 });
+            gsap.to(cursorFollower, { scale: 1, opacity: 0.5, duration: 0.3 });
+          });
+        });
+      }
+
+      // Enhanced typewriter effect with GSAP
+      gsap.registerPlugin(TextPlugin);
+
+      gsap.to("#typewriter", {
+        duration: 2,
+        text: "Hi, I'm Gourav Panwar",
+        ease: "none",
+        delay: 0.5
+      });
+
+      // Enhanced form submission
+      document.getElementById('contactForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (validateForm()) {
+          const formData = {
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            subject: document.getElementById('subject').value.trim(),
+            message: document.getElementById('message').value.trim()
+          };
+
+          submitForm(formData);
+        }
+      });
+
+      document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+      handleBackToTop();
+
+      particlesJS('particles-js', {
+        particles: {
+          number: { value: 80, density: { enable: true, value_area: 800 } },
+          color: { value: "#a855f7" },
+          shape: { type: "circle" },
+          opacity: { value: 0.5, random: true },
+          size: { value: 3, random: true },
+          line_linked: {
+            enable: true,
+            distance: 150,
+            color: "#00f3ff",
+            opacity: 0.4,
+            width: 1
+          },
+          move: {
+            enable: true,
+            speed: 2,
+            direction: "none",
+            random: true,
+            straight: false,
+            out_mode: "out",
+            bounce: false
+          }
+        },
+        interactivity: {
+          detect_on: "canvas",
+          events: {
+            onhover: { enable: true, mode: "repulse" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
